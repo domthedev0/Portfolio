@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --text-color: #f0f0f0;
+      --box-bg: #2b2b3c;
+      --highlight: #ff8fd6;
+      --section-heading: #ffcce6;
+      --button-bg: #3a3a4d;
+      --button-hover: #505066;
+      --button-text: #fff;
+      --link-color: #ffaad4;
+      --header-bg: #a0ace5;
+    }
+
+    body {
+      font-family: 'Comic Neue', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding-bottom: 40px;
+    }
+
+    .bubble-box {
+      background: var(--box-bg);
+      border-radius: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      padding: 30px 35px;
+      margin: 40px 0;
+      animation: slideIn 0.7s ease;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .bubble-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(255, 140, 214, 0.3);
+    }
+
+    header.bubble-box {
+      background: var(--header-bg);
+      color: #1e1e2f;
+      animation: bounceIn 1s ease;
+      padding: 40px 35px;
+      margin-bottom: 50px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+      color: #1e1e2f;
+      transition: 0.3s ease;
+    }
+
+    header h1:hover {
+      background: linear-gradient(to right, #fff, var(--highlight), #fff);
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: shine 1s linear forwards;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-weight: bold;
+      padding: 12px 28px;
+      font-size: 1.1em;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border-radius: 20px;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      background-color: var(--button-hover);
+      transform: scale(1.05);
+      box-shadow: 0 0 10px var(--highlight);
+    }
+
+    section {
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    section h2 {
+      color: var(--section-heading);
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      padding: 8px 0;
+      font-size: 1.15em;
+    }
+
+    a {
+      color: var(--link-color);
+      transition: 0.2s;
+    }
+
+    a:hover {
+      animation: wiggle 0.4s ease-in-out;
+    }
+
+    footer.bubble-box {
+      padding: 30px 25px;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
+
+    /* Animations */
+    @keyframes bounceIn {
+      0%   { transform: scale(0.8); opacity: 0; }
+      50%  { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      0%   { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-110vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes wiggle {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes shine {
+      from { background-position: -200%; }
+      to { background-position: 200%; }
+    }
+
+    /* Floating bubbles */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .bubbles span {
+      position: absolute;
+      display: block;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: floatUp 10s linear infinite;
+      bottom: -40px;
+    }
+
+    .bubbles span:nth-child(1) {
+      left: 5%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 0s;
+      animation-duration: 12s;
+    }
+    .bubbles span:nth-child(2) {
+      left: 15%;
+      width: 25px;
+      height: 25px;
+      animation-delay: 2s;
+      animation-duration: 14s;
+    }
+    .bubbles span:nth-child(3) {
+      left: 25%;
+      width: 15px;
+      height: 15px;
+      animation-delay: 4s;
+      animation-duration: 11s;
+    }
+    .bubbles span:nth-child(4) {
+      left: 35%;
+      width: 30px;
+      height: 30px;
+      animation-delay: 1s;
+      animation-duration: 13s;
+    }
+    .bubbles span:nth-child(5) {
+      left: 45%;
+      width: 10px;
+      height: 10px;
+      animation-delay: 3s;
+      animation-duration: 10s;
+    }
+    .bubbles span:nth-child(6) {
+      left: 55%;
+      width: 22px;
+      height: 22px;
+      animation-delay: 5s;
+      animation-duration: 15s;
+    }
+    .bubbles span:nth-child(7) {
+      left: 65%;
+      width: 18px;
+      height: 18px;
+      animation-delay: 7s;
+      animation-duration: 12s;
+    }
+    .bubbles span:nth-child(8) {
+      left: 75%;
+      width: 28px;
+      height: 28px;
+      animation-delay: 6s;
+      animation-duration: 14s;
+    }
+    .bubbles span:nth-child(9) {
+      left: 85%;
+      width: 12px;
+      height: 12px;
+      animation-delay: 8s;
+      animation-duration: 10s;
+    }
+    .bubbles span:nth-child(10) {
+      left: 95%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 9s;
+      animation-duration: 13s;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubbles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <header class="bubble-box">
+      <h1>Welcome To My Portfolio!</h1>
+      <p>Coder • School Goer • Creative Mind</p>
+    </header>
+
+    <nav class="bubble-box">
+      <a href="#" data-target="home">Home</a>
+      <a href="#" data-target="about">About</a>
+      <a href="#" data-target="projects">Projects</a>
+      <a href="#" data-target="contact">Contact</a>
+    </nav>
+
+    <main>
+      <section id="home" class="bubble-box active">
+        <h2>Home</h2>
+        <p>Hey there! Welcome to my portfolio site. This is the home page where I share a bit about myself and my journey.</p>
+      </section>
+
+      <section id="about" class="bubble-box">
+        <h2>About Me</h2>
+        <p>This is a personal webpage template great for sharing your interests!</p>
+      </section>
+
+      <section id="projects" class="bubble-box">
+        <h2>Projects</h2>
+        <ul>
+          <li>Project 1 - Cool coding stuff</li>
+          <li>Project 2 - Fun school projects</li>
+          <li>Project 3 - Creative ideas</li>
+        </ul>
+      </section>
+
+      <section id="contact" class="bubble-box">
+        <h2>Contact</h2>
+        <p>📧 Email me at: <a href="mailto:someone@example.com">someone@example.com</a></p>
+      </section>
+    </main>
+
+    <footer class="bubble-box">
+      <p>Made with 💖 - Your Name © 2025</p>
+    </footer>
+  </div>
+
+  <script>
+    // Show only the selected section, hide others
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('main section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('data-target');
+
+        sections.forEach(section => {
+          if (section.id === targetId) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
